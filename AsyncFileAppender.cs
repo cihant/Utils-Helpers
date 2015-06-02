@@ -58,7 +58,7 @@ public class AsyncFileAppender : RollingFileAppender
 	public AsyncFileAppender()
 		: base()
 	{
-		if (running == false) { processQueue(); }
+		if (running == false) { ProcessQueue(); }
 
 		afAppenders.Add(this);
 	}
@@ -72,7 +72,7 @@ public class AsyncFileAppender : RollingFileAppender
 		}
 	}
 
-	static void processQueue()
+	static void ProcessQueue()
 	{
 		if (running) { return; } running = true; // prevent double
 
@@ -84,7 +84,7 @@ public class AsyncFileAppender : RollingFileAppender
 				System.Threading.Thread.Sleep(300); // wait for first run delay
 				while (running)
 				{
-					writeLogs();
+					WriteLogs();
 					mAutoResetEvent.WaitOne(waitTime);
 				}
 			}
@@ -97,7 +97,7 @@ public class AsyncFileAppender : RollingFileAppender
 		}).Start();
 
 	}
-	static void writeLogs()
+	static void WriteLogs()
 	{
 		foreach (var appKV in afAppenders)
 		{
