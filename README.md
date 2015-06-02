@@ -1,7 +1,9 @@
 # Utils-Helpers
 
-Sample log4net.config appender settings
 
+
+Sample log4net.config appender settings
+```
   <logger name="position">
     <level value="DEBUG" />
     <appender-ref ref="TESTLogger" />
@@ -22,3 +24,4 @@ Sample log4net.config appender settings
     </filter>
     <filter type="log4net.Filter.DenyAllFilter"/>
   </appender>
+```
