@@ -6,27 +6,13 @@
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
-<#@ assembly name="D:\\_WS\\Dev\\VOBGW\\bin\\Debug\\VOBGW_S.dll" #>
+<#@ assembly name="PATH_TO_REFERENCE_DLL.dll" #>
 
 <# bool useQTTypes = false; string dllExport ="DECL_EXPORT"; List<Type> ccs = new List<Type>();
-ccs.Add(typeof(sm.VOBGW.Sozlesme));
-ccs.Add(typeof(sm.VOBGW.Teminat));
-ccs.Add(typeof(sm.VOBGW.FiyatBaz));
-ccs.Add(typeof(sm.VOBGW.AlisSatis));
-ccs.Add(typeof(sm.VOBGW.Emir));
-ccs.Add(typeof(sm.VOBGW.EmirBaz));
-ccs.Add(typeof(sm.VOBGW.EmirDurum));
-ccs.Add(typeof(sm.VOBGW.FiyatBaz));
-ccs.Add(typeof(sm.VOBGW.FiyatTip));
-ccs.Add(typeof(sm.VOBGW.Gerceklesen));
-ccs.Add(typeof(sm.VOBGW.IslemTur));
-ccs.Add(typeof(sm.VOBGW.LoginStatus));
-ccs.Add(typeof(sm.VOBGW.Pozisyon));
-ccs.Add(typeof(sm.VOBGW.PriceDirection));
-ccs.Add(typeof(sm.VOBGW.SozlesmeDurum));
-ccs.Add(typeof(sm.VOBGW.SozlesmeActionType));
-ccs.Add(typeof(sm.VOBGW.SozlesmeFields));
-ccs.Add(typeof(sm.VOBGW.TumIslem));
+ccs.Add(typeof(namespace.CLASS1));
+ccs.Add(typeof(namespace.CLASS2));
+ccs.Add(typeof(namespace.CLASS3));
+ccs.Add(typeof(namespace.CLASS4));
 GetPropertiesAll(ccs, dllExport, useQTTypes);
 #>
 <#+ private void GetPropertiesAll(List<Type> ccs, string dllExport, bool useQTTypes)
