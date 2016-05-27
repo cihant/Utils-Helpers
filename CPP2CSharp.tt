@@ -6,13 +6,27 @@
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
-<#@ assembly name="PATH_TO_REFERENCE_DLL.dll" #>
+<#@ assembly name="D:\\_WS\\Dev\\VOBGW\\bin\\Debug\\VOBGW_S.dll" #>
 
-<# bool useQTTypes = false; string dllExport ="VOBGWCPP_EXPORT"; List<Type> ccs = new List<Type>();
-ccs.Add(typeof(namespace.CLASS1));
-ccs.Add(typeof(namespace.CLASS2));
-ccs.Add(typeof(namespace.CLASS3));
-ccs.Add(typeof(namespace.CLASS4));
+<# bool useQTTypes = false; string dllExport ="DECL_EXPORT"; List<Type> ccs = new List<Type>();
+ccs.Add(typeof(sm.VOBGW.Sozlesme));
+ccs.Add(typeof(sm.VOBGW.Teminat));
+ccs.Add(typeof(sm.VOBGW.FiyatBaz));
+ccs.Add(typeof(sm.VOBGW.AlisSatis));
+ccs.Add(typeof(sm.VOBGW.Emir));
+ccs.Add(typeof(sm.VOBGW.EmirBaz));
+ccs.Add(typeof(sm.VOBGW.EmirDurum));
+ccs.Add(typeof(sm.VOBGW.FiyatBaz));
+ccs.Add(typeof(sm.VOBGW.FiyatTip));
+ccs.Add(typeof(sm.VOBGW.Gerceklesen));
+ccs.Add(typeof(sm.VOBGW.IslemTur));
+ccs.Add(typeof(sm.VOBGW.LoginStatus));
+ccs.Add(typeof(sm.VOBGW.Pozisyon));
+ccs.Add(typeof(sm.VOBGW.PriceDirection));
+ccs.Add(typeof(sm.VOBGW.SozlesmeDurum));
+ccs.Add(typeof(sm.VOBGW.SozlesmeActionType));
+ccs.Add(typeof(sm.VOBGW.SozlesmeFields));
+ccs.Add(typeof(sm.VOBGW.TumIslem));
 GetPropertiesAll(ccs, dllExport, useQTTypes);
 #>
 <#+ private void GetPropertiesAll(List<Type> ccs, string dllExport, bool useQTTypes)
@@ -24,6 +38,7 @@ GetPropertiesAll(ccs, dllExport, useQTTypes);
 }
 private void GetProperties(List<Type> ccs, Type t, string dllExport, bool useQTTypes)
 {
+	string classPrefix="C"; 
 	string objectName = t.Name;
 	WriteLine("//");
 	WriteLine("// Copyright © " + DateTime.Now.ToString("yyyy") +", Cihan T. (Generate Date: [" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:00") +"])");
@@ -38,7 +53,7 @@ private void GetProperties(List<Type> ccs, Type t, string dllExport, bool useQTT
 		WriteLine("#include \"property.h\"");
 	}
 	if(t.IsClass || t.IsInterface)
-		GenerateClass(ccs, t, objectName, dllExport, useQTTypes);
+		GenerateClass(ccs, t, classPrefix+objectName, dllExport, useQTTypes);
 	else if(t.IsEnum)
 		GenerateFromEnum(t, objectName, dllExport, useQTTypes);
 
@@ -78,7 +93,7 @@ private void GenerateFromEnum(Type t, string objectName, string dllExport, bool 
 {
 	FieldInfo[] memberInfos = t.GetFields(BindingFlags.Public | BindingFlags.Static);
 
-	WriteLine("enum class " + dllExport + " " + objectName + "");
+	WriteLine("enum " + objectName + "");
 	WriteLine("{");
 
 	for(int i = 0; i < memberInfos.Length; i++){ Write("\t" + memberInfos[i].Name + " = " + memberInfos[i].GetRawConstantValue().ToString()); if(i < memberInfos.Length - 1) Write(","); Write("\r\n"); } WriteLine("};"); } private string getAsQtProperty(PropertyInfo p, bool useQTTypes) { switch(p.PropertyType.Name){ case "String": return useQTTypes?"QString":"std::string"; case "Int32": return "int"; case "Decimal": return "float"; case "Double": return "float"; case "Char": return "char"; case "Byte": return "char"; case "DateTime": return useQTTypes?"QDateTime":"std::tm"; case "Boolean": return useQTTypes?"bool":"BOOL"; case "List`1": return useQTTypes?"QList<" + getListTypes(p, useQTTypes) +">":"vector<" + getListTypes(p, useQTTypes) +">";
